@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password,role } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -14,13 +14,18 @@ exports.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
-      name,
-      email,
-      password: hashedPassword,
+    
+  name,
+  email,
+  password: hashedPassword,
+  role: email === 'admin@example.com' ? 'admin' : 'student'
+});
       
-    });
+  
 
     await newUser.save();
+    
+
 
     const token = jwt.sign({ id: newUser._id, role: newUser.role }, process.env.JWT_SECRET, {
       expiresIn: '1d'

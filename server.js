@@ -17,7 +17,7 @@ const app = express();
 
 // Middleware
 
-app.use(cors({ origin: 'http://localhost:5173' }));
+
 
 app.use(cors());
 app.use(express.json());
@@ -40,6 +40,15 @@ mongoose.connect(process.env.MONGO_URI, {
 })
 .then(() => console.log('✅ MongoDB Connected'))
 .catch(err => console.error('❌ MongoDB connection failed:', err));
+
+const cors = require('cors');
+app.use(cors({
+  origin: 'https://syl-frontend.netlify.app',
+  credentials: true
+}));
+
+
+
 
 // Start Server
 const PORT = process.env.PORT || 5000;
