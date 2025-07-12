@@ -4,7 +4,7 @@ const askChatbot = async (req, res) => {
   const { message } = req.body;
 
   try {
-    // Mock response
+    
     const mockResponse = "This is a mock response. The chatbot is currently unavailable.";
 
     // Send the mock response as a JSON object
