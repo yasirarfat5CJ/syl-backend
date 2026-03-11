@@ -3,10 +3,15 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.register = async (req, res) => {
-  const { name, email, password,role } = req.body;
+  const { name, email, password } = req.body;
+  const normalizedEmail = email?.trim().toLowerCase();
 
   try {
-    const existingUser = await User.findOne({ email });
+    if (!name || !normalizedEmail || !password) {
+      return res.status(400).json({ msg: 'Name, email, and password are required' });
+    }
+
+    const existingUser = await User.findOne({ email: normalizedEmail }).lean();
     if (existingUser) {
       return res.status(400).json({ msg: 'User already exists' });
     }
@@ -16,9 +21,9 @@ exports.register = async (req, res) => {
     const newUser = new User({
     
   name,
-  email,
+  email: normalizedEmail,
   password: hashedPassword,
-  role: email === 'admin@example.com' ? 'admin' : 'student'
+  role: normalizedEmail === 'admin@example.com' ? 'admin' : 'student'
 });
       
   
@@ -46,9 +51,14 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
+  const normalizedEmail = email?.trim().toLowerCase();
 
   try {
-    const user = await User.findOne({ email });
+    if (!normalizedEmail || !password) {
+      return res.status(400).json({ msg: 'Email and password are required' });
+    }
+
+    const user = await User.findOne({ email: normalizedEmail }).select('name role password');
     if (!user) return res.status(400).json({ msg: 'Invalid credentials' });
 
     const isMatch = await bcrypt.compare(password, user.password);

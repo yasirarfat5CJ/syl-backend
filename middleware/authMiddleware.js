@@ -1,9 +1,7 @@
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
-const User = require('../models/User'); // adjust path if needed
 
 const protect = asyncHandler(async (req, res, next) => {
-  console.log("Headers:", req.headers); // Log the headers
   let token;
 
   if (
@@ -14,7 +12,11 @@ const protect = asyncHandler(async (req, res, next) => {
       token = req.headers.authorization.split(' ')[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      req.user = await User.findById(decoded.id).select('-password');
+      // Avoid DB hit on every request; token already carries id + role.
+      req.user = {
+        id: decoded.id,
+        role: decoded.role
+      };
       return next(); // ✅ move to next middleware if success
     } catch (error) {
       console.error('Invalid token:', error.message);

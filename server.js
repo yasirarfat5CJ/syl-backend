@@ -16,10 +16,16 @@ dotenv.config();
 const app = express();
 
 // Middleware
+app.disable('x-powered-by');
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'https://syl-frontend.netlify.app'
+].filter(Boolean);
 
-
-
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins.length ? allowedOrigins : true,
+  credentials: true
+}));
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/syllabus', syllabusRoutes);
@@ -35,17 +41,9 @@ app.get('/', (req, res) => {
 });
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URI, {
- 
-})
+mongoose.connect(process.env.MONGO_URI, {})
 .then(() => console.log('✅ MongoDB Connected'))
 .catch(err => console.error('❌ MongoDB connection failed:', err));
-
-
-app.use(cors({
-  origin: 'https://syl-frontend.netlify.app',
-  credentials: true
-}));
 
 
 
