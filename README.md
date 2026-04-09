@@ -1,55 +1,33 @@
-### How to Run the Application
+A robust Node.js/Express backend API for managing academic syllabi, courses, modules, and educational content. Built with Express, MongoDB, and Mongoose, providing comprehensive REST API endpoints for the Syllabus Management System.
 
-#### Development Mode
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yasirarfat5CJ/syl-backend.git
-   cd syl-backend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+---
 
-#### Production Mode
-1. Build the application:
-   ```bash
-   npm run build
-   ```
-2. Start the production server:
-   ```bash
-   npm start
-   ```
+## 🎯 Project Overview
 
-#### Docker
-To run the application using Docker, follow these steps:
-1. Build the Docker image:
-   ```bash
-   docker build -t syl-backend .
-   ```
-2. Run the Docker container:
-   ```bash
-   docker run -p 3000:3000 syl-backend
-   ```
+The **Syllabus Management System Backend** is a comprehensive server application that handles:
+- User authentication and authorization
+- Role-based access control (Student, Admin)
+- Syllabus management and organization
+- Subject and module creation/editing
+- Academic branch/department management
 
-#### Testing
-To run tests:
-1. Execute:
-   ```bash
-   npm test
-   ```
+The API is production-ready with secure authentication, proper error handling, and scalable database architecture.
 
-#### Troubleshooting
-- Make sure you have all the necessary environment variables set.
-- Check logs for any errors:
-   ```bash
-   npm run logs
-   ```
+---
 
-#### Workflow Tips
-- Use feature branches for development to keep your main branch clean.
-- Regularly pull changes from the main branch to keep your branch updated.
+## 🛠️ Tech Stack
+
+| Component | Technology | Version |
+|-----------|-----------|---------|
+| **Runtime** | Node.js | LTS |
+| **Framework** | Express.js | ^4.x |
+| **Database** | MongoDB | Cloud |
+| **ODM** | Mongoose | ^7.x |
+| **Authentication** | JWT (jsonwebtoken) | ^9.x |
+| **Password Hashing** | bcryptjs | ^2.4.x |
+| **Environment** | dotenv | ^16.x |
+| **CORS** | cors | ^2.x |
+
+### Development Tools
+- `nodemon` - Auto-reload during development
+- `eslint` - Code quality and linting
